@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Feedback
+{% endblock %}
+
+{% block content %}
+    <body onload="pageLoading()">
+           {% formfields %}
+    </body>
+
+    <script>
+        function pageLoading(){
+            document.getElementsByClassName("debug-info")[0].style.visibility = "hidden";
+
+        }
+    </script>
+
+    {% next_button %}
+{% endblock %}
+
+

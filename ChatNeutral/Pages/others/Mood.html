@@ -1,0 +1,126 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+        <br><br>
+    <style>
+    .myclass::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 20px !important;
+        width: 20px !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        cursor: pointer !important !important;
+        -webkit-appearance: none !important;
+        margin-top: -8px !important;
+    }
+
+    input[type=range] {
+        -webkit-appearance: none;
+        margin: 18px 0;
+        width: 100%;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        background: #000000;
+        border-radius: 1.3px;
+        border: 0.2px solid #010101;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        border: 0px;
+        height: 0px;
+        width: 0px;
+        border-radius: 0px;
+        -webkit-appearance: none;
+    }
+
+    #next
+    {
+        width: 50px;
+        height: 20px;
+        background-color: white;
+    }
+    </style>
+
+    <script>
+
+    $(document).ready(function () {
+        $('input[type=range]').on('input change', function () {
+            $('input[type=range]').addClass('myclass');
+        });
+
+    });
+    </script>
+
+    <body onload="pageLoading()">
+
+    </body>
+        <label class="col-form-label" style="font-size: 22px">
+            <h3>Please indicate how you feel at the moment by clicking on the line below.</h3>
+            Click on the black bar to reveal a slider.
+        </label>
+        <br><br><br><br><br>
+        <div class="input-group">
+            <table class="table">
+                <td style="border-bottom: 1px solid white;">
+                    <span  class="input-group-text">Happy &#128513;</span>
+                </td>
+                <td style="border-bottom: 1px solid white;">
+                    <input id="bar" type="range" name="vas" min="0" max="100" step="1" class="form-range" style="width: 400px;">
+                </td>
+                <td style="border-bottom: 1px solid white;">
+                    <span class="input-group-text">Sad &#128542;</span>
+                </td>
+            </table>
+        </div>
+        <br><br><br><br><br><br><br>
+
+
+        <button id="nextButton" class="btn btn-primary"
+                onclick="clickNext()">
+                <p class=" my-2 my-sm-0">
+                    Next
+                </p>
+        </button>
+
+        <div style="visibility: hidden;">
+        {% next_button %}
+        </div>
+
+
+
+    <script>
+    var afterclicked = true;
+    var mood;
+      function pageLoading() {
+          document.getElementById("nextButton").disabled = true;
+          if (afterclicked) {
+              document.getElementById("bar").onclick = function (event) {
+                  event.preventDefault();
+                  document.getElementById("nextButton").disabled = false;
+              }
+
+          }
+          var mood = "vas";
+          document.getElementById(mood).value;
+      }
+
+    </script>
+
+{% endblock %}

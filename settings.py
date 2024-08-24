@@ -3,10 +3,22 @@ from os import environ
 
 SESSION_CONFIGS = [
      dict(
-         name='chatGPT',
-         app_sequence=['chatGPT',],
+         name='OnlyChatNeutral',
+         app_sequence=['OnlyChatNeutral'],
          num_demo_participants=1,
      ),
+    dict(
+        name="ChatNeutral",
+        num_demo_participants=4,
+        num_rounds=8,
+        app_sequence=['ChatNeutral']
+    ),
+    dict(
+        name="Complete",
+        num_demo_participants=4,
+        num_rounds=8,
+        app_sequence=['Complete']
+    )
 ]
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.

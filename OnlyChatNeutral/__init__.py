@@ -12,7 +12,7 @@ a chatGPT interface for oTree
 """
 
 class C(BaseConstants):
-    NAME_IN_URL = 'chatGPT'
+    NAME_IN_URL = 'OnlyChatNeutral'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -142,7 +142,7 @@ class intro(Page):
 class chat(Page):
     form_model = 'player'
     form_fields = ['chatLog']
-    timeout_seconds = 120
+    timeout_seconds = 600
     
     @staticmethod
     def live_method(player: Player, data):
@@ -182,6 +182,5 @@ class chat(Page):
         }
 
 page_sequence = [
-    intro,
     chat,
 ]

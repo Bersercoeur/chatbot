@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Scenario
+{% endblock %}
+
+{% block content %}
+
+<body onload="pageLoading()">
+    <br>
+<div style="font-size: 24px;">
+<p>
+    Please imagine yourself in the following situation:
+</p>
+
+<p>
+    You decided to go to watch a movie in a cinema called Rex Cinema. 
+    You still do not know what movies are currently playing and you go on their website. 
+    You notice that there is a chatbot with which you can interact. 
+    The chatbot will help you choose what movie you want to watch and give you all necessary information about the booking (price, times, and booking number).
+</p>
+
+<p>
+    You interact with the chatbot by selecting a button for the answer you want to give. 
+    You can not go back once you sent an answer, so read the chatbot message and choose the answer carefully. 
+</p>
+</div>
+
+<br>
+    {% next_button %}
+
+</body>
+
+    <script>
+        function pageLoading() {
+            document.getElementsByClassName("debug-info")[0].style.visibility = "hidden";
+        }
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Survey (2/2)
+{% endblock %}
+
+{% block content %}
+    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements concerning your shopping behavior.</p>
+
+    <body onload="pageLoading()" style="font-size: 20px;">
+        
+    </body>
+        <table class="table" style="background-color: #F6F3F3">
+                <tr style="border-bottom: 1px solid black;">
+                    <th style = "border-right: 1px solid black;">Questions</th>
+                    <th>Strongly disagree</th>
+                    <th>Disagree</th>
+                    <th>Neutral</th>
+                    <th>Agree&nbsp;</th>
+                    <th>Strongly &nbsp;&nbsp;agree</th>
+                </tr>
+            {% for field in form %}
+
+                <tr>
+                    <th style = "border-right: 1px solid black;">{{ field.label }}</th>
+                    {% for choice in field %}
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% next_button %}
+
+    <script>
+        function pageLoading() {
+            document.getElementsByClassName("debug-info")[0].style.visibility = "hidden";
+        }
+    </script>
+
+{% endblock %}
+
+
+
+
+
+

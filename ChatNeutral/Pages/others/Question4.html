@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension questions (4/6)
+{% endblock %}
+
+{% block content %}
+<body onload="pageLoading()">
+        <br><br><br>
+<div style="font-size: 24px;" >
+
+    {% formfields %}
+        <br><br>
+        {% next_button %}
+
+</div>
+</body>
+
+{% endblock %}
+
+

@@ -1,0 +1,54 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Survey (1/2)
+{% endblock %}
+{#<style>#}
+{#    tr {#}
+{#        border-bottom: 5px solid black;#}
+{#    }#}
+{#</style>#}
+{% block content %}
+<p style="font-size: 22px">Please indicate to what extent do you feel guilty if you...</p>
+
+    <body onload="pageLoading()" style="font-size: 20px;">
+        
+    </body>
+        <table class="table" style="background-color: #F6F3F3">
+                <tr style="border-bottom: 1px solid black;">
+                    <th style = "border-right: 1px solid black;">Questions</th>
+                    <th>&nbsp;Not at &nbsp;&nbsp;&nbsp;&nbsp;all &nbsp;&nbsp;guilty</th>
+                    <th>Moderately &nbsp;not guilty&nbsp;&nbsp;</th>
+                    <th>&nbsp;Slightly &nbsp;&nbsp;&nbsp;not &nbsp;&nbsp;guilty&nbsp;&nbsp;</th>
+                    <th>&nbsp;Slightly &nbsp;&nbsp;guilty&nbsp;</th>
+                    <th>Moderately &nbsp;&nbsp;&nbsp;&nbsp;guilty</th>
+                    <th>Extremely &nbsp;&nbsp;&nbsp;guilty</th>
+                </tr>
+            {% for field in form %}
+                
+                <tr>
+                    <th style = "border-right: 1px solid black;">{{ field.label}}</th>
+                    {% for choice in field %}
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+         </table>
+
+    {% next_button %}
+
+    <script>
+        function pageLoading() {
+            document.getElementsByClassName("debug-info")[0].style.visibility = "hidden";
+        }
+    </script>
+
+{% endblock %}
+
+
+
+
+
+
