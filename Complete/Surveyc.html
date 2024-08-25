@@ -2,49 +2,40 @@
 {% load otree static %}
 
 {% block title %}
-    Survey (1/8)
+    Survey (3/4)
 {% endblock %}
 
 {% block content %}
-    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements concerning sustainable consumption.</p>
+    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements concerning the drink and snack menu proposed by the chatbot.</p>
 
     <body onload="pageLoading()" style="font-size: 18px;">
         
-    </body>
-        <table class="table" style="background-color: #F6F3F3" >
-                <tr style="border-bottom: 1px solid black;">
-                    <th style = "border-right: 1px solid black;">Questions</th>
-                    <th>Strongly &nbsp;&nbsp;agree</th>
-                    <th>&nbsp;&nbsp;Agree&nbsp;</th>
-                    <th>&nbsp;More&nbsp; or less &nbsp;agree&nbsp;</th>
-                    <th>&nbsp;Neutral</th>
-                    <th>&nbsp;More&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;less &nbsp;disagree&nbsp;</th>
-                    <th>Disagree</th>
-                    <th>Strongly disagree</th>
-                </tr>
-            {% for field in form %}
-                
-                <tr>
-                    <th style = "border-right: 1px solid black;">{{ field.label }}</th>
-                    {% for choice in field %}
-                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-         </table>
+        <body onload="pageLoading()" style="font-size: 18px;">
+        
+        </body>
+            <table class="table" style="background-color: #F6F3F3" >
+                    <tr style="border-bottom: 1px solid black;">
+                        <th style = "border-right: 1px solid black;">Questions</th>
+                        <th>Strongly &nbsp;&nbsp;agree</th>
+                        <th>&nbsp;&nbsp;Agree&nbsp;</th>
+                        <th>&nbsp;More&nbsp; or less &nbsp;agree&nbsp;</th>
+                        <th>&nbsp;Neutral</th>
+                        <th>&nbsp;More&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;less &nbsp;disagree&nbsp;</th>
+                        <th>Disagree</th>
+                        <th>Strongly disagree</th>
+                    </tr>
+                {% for field in form %}
+                {% for field in form %}
+                    
+                    <tr>
+                        <th style = "border-right: 1px solid black;">{{ field.label }}</th>
+                        {% for choice in field %}
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+             </table>
 
-    {% next_button %}
+             {% next_button %}
 
-    <script>
-        function pageLoading() {
-            document.getElementsByClassName("debug-info")[0].style.visibility = "hidden";
-        }
-    </script>
-
-{% endblock %}
-
-
-
-
-
-
+             {% endblock %}
