@@ -28,7 +28,7 @@ ROOMS = [
         name='ChatbotStudy',
         display_name='Chatbot Study',
         participant_label_file='_rooms/ChatbotStudy.txt',
-        use_secure_urls=True
+        use_secure_urls=False
     ),
 ]
 
