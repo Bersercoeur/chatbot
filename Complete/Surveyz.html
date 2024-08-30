@@ -39,15 +39,26 @@
             text-align: right;
         }
 
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         .form-group label {
             font-weight: bold;
             display: block;
             margin-bottom: 10px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        /* Adjustments for the specific question */
+        .form-group.no-padding {
+            margin-bottom: 30px; /* Increase margin at the bottom */
+            padding: 0;
         }
+        
+        .form-group.no-padding label {
+            padding-left: 0;
+        }
+
     </style>
 
     <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements:</p>
@@ -75,12 +86,12 @@
         {% endfor %}
     </table>
 
-    <div class="form-group">
+    <div class="form-group no-padding">
         <label for="frequency" class="question-label">{{ form.a1.label }}</label>
         {{ form.a1 }}
     </div>
 
-    <p style="font-size: 22px">Please indicate the importance of the following statement:</p>
+    <p style="font-size: 22px; margin-top: 20px;">Please indicate the importance of the following statement:</p>
 
     <table class="table">
         <tr>

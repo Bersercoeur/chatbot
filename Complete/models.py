@@ -86,7 +86,7 @@ class Player(BasePlayer):
     c1 = make_field("If you go to the cinema, how important is it for you to get a snack (popcorn or other) and a drink?")
 
     # WTB for menu
-    wt1 = make_currency_field("How much do you expect to pay for a snack and drink menu at the cinema?")
+    wt1 = make_currency_field("How much do you expect to pay for a snack and drink menu for one person at the cinema?")
 
     # survey post experiment
     # Manipulation check - surveya

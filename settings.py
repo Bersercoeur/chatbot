@@ -4,8 +4,8 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
         name="Complete",
-        num_demo_participants=4,
-        num_rounds=8,
+        num_demo_participants=8,
+        num_rounds=1,
         app_sequence=['Complete']
     )
 ]
@@ -27,8 +27,6 @@ ROOMS = [
     dict(
         name='ChatbotStudy',
         display_name='Chatbot Study',
-        participant_label_file='_rooms/ChatbotStudy.txt',
-        use_secure_urls=False
     ),
 ]
 

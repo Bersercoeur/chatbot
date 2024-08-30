@@ -80,5 +80,5 @@ class Mood2(Page):
     form_model = 'player'
     form_fields = ['vas']
 
-page_sequence = [intro, Start, Mood, GeneralInformation, Surveyz, Part2, Scenario, chat, Part3, Mood2, Surveya,Surveyb, Surveyd, Surveyc, Debriefing]
+page_sequence = [intro, Start, Mood, GeneralInformation, Surveyz, Part2, Scenario, chat, Part3, Mood2, Surveya,Surveyb, Surveyc, Surveyd, Debriefing]
 #page_sequence = [Mood, Scenario, GeneralInformation, Surveyz]
