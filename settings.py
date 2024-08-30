@@ -25,8 +25,10 @@ SESSION_FIELDS = []
 # rooms
 ROOMS = [
     dict(
-        name='studyRoom1',
-        display_name='Study Room 1',
+        name='ChatbotStudy',
+        display_name='Chatbot Study',
+        participant_label_file='_rooms/ChatbotStudy.txt',
+        use_secure_urls=True
     ),
 ]
 
