@@ -1,14 +1,12 @@
-# This CITATION.cff file was generated with cffinit.
-# Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: oTree GPT
+title: User Engagement Chatbot Experiment
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
 type: software
 authors:
-  - given-names: Clint
-    family-names: McKenna
-repository-code: 'https://github.com/clintmckenna/oTree_gpt'
-date-released: '2023-03-29'
+  - given-names: Pauline
+    family-names: Faijean
+repository-code: 'https://github.com/Bersercoeur/chatbot.git'
+date-released: '2024-08-29'

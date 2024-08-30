@@ -2,17 +2,6 @@ from os import environ
 
 
 SESSION_CONFIGS = [
-     dict(
-         name='OnlyChatNeutral',
-         app_sequence=['OnlyChatNeutral'],
-         num_demo_participants=1,
-     ),
-    dict(
-        name="ChatNeutral",
-        num_demo_participants=4,
-        num_rounds=8,
-        app_sequence=['ChatNeutral']
-    ),
     dict(
         name="Complete",
         num_demo_participants=4,
@@ -54,6 +43,13 @@ ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
-DEMO_PAGE_INTRO_HTML = """ """
+AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
 
-SECRET_KEY = '6929828123368'
+DEMO_PAGE_INTRO_HTML = """
+Here are some oTree games.
+"""
+
+# don't share this with anybody.
+SECRET_KEY = 'g9s=z=%@6fhf=vw^(x(-yhadi@3yk^hep#uts87^w@)&0m-$*f'
+
+INSTALLED_APPS = ['otree']

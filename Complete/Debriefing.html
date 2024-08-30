@@ -1,17 +1,41 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
-{% block title %}
-The End
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
-<br><br>
-<br><br>
-<h1>Thank you for your participation!</h1>
-<br><br>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
+    /* Page container for centering the content */
+    .end-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+        text-align: center;
+    }
+
+    .the-end {
+        font-family: 'Great Vibes', cursive;
+        font-size: 7rem; /* Adjust the size to your liking */
+        color: black; /* Adjust the color to your liking */
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: black;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="end-container">
+    <div class="the-end">The End</div>
+    <h1>Thank you for your participation!</h1>
+</div>
 {% endblock %}
+
 
 
 

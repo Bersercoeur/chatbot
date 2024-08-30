@@ -1,47 +1,32 @@
-# oTree GPT 
+#User Engagement Chatbot Experiment
+This repository contains a user engagement chatbot experiment built using oTree. The experiment involves participants interacting with a chatbot that uses either a neutral or humorous tone. The aim is to study user satisfaction, willingness to buy, and perceived value of a snack and drink menu based on the chatbot's language style.
 
-This is a simple chat app for [oTree](https://www.otree.org/) that allows participants to chat with a predefined ChatGPT personality using OpenAI's API. Please feel free to leave any feedback or open an issue if you spot a problem. A short blogpost on using this app can be found [here](https://clintmckenna.com/blog/2023-03-29/)!
+##System Prompt
+The system randomizes participants to interact with one of two chatbot versions: neutral or humorous. Each version has predefined responses tailored to the study's objectives. You can adjust the chatbot's responses and behavior by modifying the prompts and conversation flow within the code.
 
-## System Prompt 
-You can use the system prompt to adjust the tendencies of the personality you want participants to speak to. Here is an example system prompt:
+##API Key
+While this project does not require an external API key (such as OpenAI's API) as it does not rely on external NLP services, all chatbot logic and responses are handled within oTree.
 
-![embedded](https://clintmckenna.com/img/2023/2023-03-29/prompt_texas.png)
+##Data Collection
+The experiment saves data on participants' interactions with the chatbot, including chat logs and responses to survey questions. This data is stored in the database and can be exported for analysis through oTree's data export features.
 
-And what this looks like when chatting:
+##Variables Collected
+Chatbot Version: Neutral or humorous version used.
+Chat Logs: All participant interactions with the chatbot.
+Survey Responses: Includes mood, satisfaction, willingness to buy, perceived value, and demographic data.
+Menu Selection: Whether the participant opted for the snack and drink menu (binary variable).
+Customization
+You can modify the chatbot's responses by editing the conversation flow in the HTML and JavaScript files. The chatbot’s behavior can be adjusted by editing the scripts provided.
 
-![embedded](https://clintmckenna.com/img/2023/2023-03-29/texas.png)
+##Citation
+Please consider citing this project if you find it useful in your research:
 
-The app is set to randomize participants to view one of two personalities. You can adjust these or provide more/less as desired.
+Faijean, P., (2024). User Engagement Chatbot Experiment. https://github.com/Bersercoeur/chatbot.git
+As part of oTree's installation agreement, be sure to cite their paper:
 
-## API key
-To use this, you will need to acquire a key from [OpenAI's API](https://openai.com/product). Add this as an environment variable to your local environment. If using on Heroku, you can use this command to add it to your application:
+Chen, D.L., Schonger, M., Wickens, C., 2016. oTree - An open-source platform for laboratory, online and field experiments. Journal of Behavioral and Experimental Finance, vol 9: 88-97.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
----
-> <i>heroku config:add CHATGPT_KEY=sk-.....</i>
----
-
-## OpenAI package requirements
-When using locally, you will also need to install openai's Python package. Be sure to add this to your requrements.txt file before using online.
-
----
-> <i>openai==0.27.0</i>
----
-
-## Model Parameters
-Currently, I have this set up to use gpt-3.5-turbo. You can adjust this model and the temperature in the \__init__.py file:
-
-![embedded](https://clintmckenna.com/img/2023/2023-03-29/constants.png)
-
-## Data Output
-The text logs are saved in participant fields, but I also made a simple custom export function. This can be accessed in the "data" tab in oTree and will show the chat logs as a long-form csv.
-
-
-## Citation
-As part of oTree's [installation agreement](https://otree.readthedocs.io/en/master/install.html), be sure to cite their paper: 
-
-- Chen, D.L., Schonger, M., Wickens, C., 2016. oTree - An open-source platform for laboratory, online and field experiments. Journal of Behavioral and Experimental Finance, vol 9: 88-97.
-
-If this app was helpful, you may consider citing this github repository as well.
-
-- McKenna, C., (2023). oTree GPT. https://github.com/clintmckenna/oTree_gpt
-
+##Acknowledgements
+This project was inspired by the work of McKenna, C., (2023). oTree GPT. Special thanks to the oTree community for their support and contributions.

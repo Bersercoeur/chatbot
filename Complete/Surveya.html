@@ -6,40 +6,72 @@
 {% endblock %}
 
 {% block content %}
-    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements concerning the drink and snack menu proposed by the chatbot.</p>
+    <style>
+        .table {
+            margin-bottom: 30px;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            background-color: #F6F3F3;
+        }
 
-    <body onload="pageLoading()" style="font-size: 18px;">
-        
-    </body>
-        <table class="table" style="background-color: #F6F3F3" >
-                <tr style="border-bottom: 1px solid black;">
-                    <th style = "border-right: 1px solid black;">Questions</th>
-                    <th>Strongly &nbsp;&nbsp;agree</th>
-                    <th>&nbsp;&nbsp;Agree&nbsp;</th>
-                    <th>&nbsp;More&nbsp; or less &nbsp;agree&nbsp;</th>
-                    <th>&nbsp;Neutral</th>
-                    <th>&nbsp;More&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;less &nbsp;disagree&nbsp;</th>
-                    <th>Disagree</th>
-                    <th>Strongly disagree</th>
-                </tr>
-            {% for field in form %}
-            {% for field in form %}
-                
-                <tr>
-                    <th style = "border-right: 1px solid black;">{{ field.label }}</th>
-                    {% for choice in field %}
-                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
-                    {% endfor %}
-                </tr>
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #E0E0E0;
+            font-weight: bold;
+            border-bottom: 2px solid #CCCCCC;
+        }
+
+        .question-label {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        input.currency {
+            border: 1px solid #CCCCCC;
+            padding: 5px;
+            width: 80px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements:</p>
+
+    <table class="table">
+        <tr>
+            <th>Questions</th>
+            <th>Strongly agree</th>
+            <th>Agree</th>
+            <th>More or less agree</th>
+            <th>Neutral</th>
+            <th>More or less disagree</th>
+            <th>Disagree</th>
+            <th>Strongly disagree</th>
+        </tr>
+        {% for field in form %}
+        <tr>
+            <td class="question-label">{{ field.label }}</td>
+            {% for choice in field %}
+                <td>{{ choice }}</td>
             {% endfor %}
-         </table>
+        </tr>
+        {% endfor %}
+    </table>
 
     {% next_button %}
 
 {% endblock %}
-
-
-
-
-
-

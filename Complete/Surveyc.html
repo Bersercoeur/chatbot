@@ -6,36 +6,153 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+        .table {
+            margin-bottom: 30px;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            background-color: #F6F3F3;
+        }
+
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #E0E0E0;
+            font-weight: bold;
+            border-bottom: 2px solid #CCCCCC;
+        }
+
+        .question-label {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        input.currency {
+            border: 1px solid #CCCCCC;
+            padding: 5px;
+            width: 80px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+
     <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements concerning the drink and snack menu proposed by the chatbot.</p>
 
-    <body onload="pageLoading()" style="font-size: 18px;">
-        
-        <body onload="pageLoading()" style="font-size: 18px;">
-        
-        </body>
-            <table class="table" style="background-color: #F6F3F3" >
-                    <tr style="border-bottom: 1px solid black;">
-                        <th style = "border-right: 1px solid black;">Questions</th>
-                        <th>Strongly &nbsp;&nbsp;agree</th>
-                        <th>&nbsp;&nbsp;Agree&nbsp;</th>
-                        <th>&nbsp;More&nbsp; or less &nbsp;agree&nbsp;</th>
-                        <th>&nbsp;Neutral</th>
-                        <th>&nbsp;More&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;less &nbsp;disagree&nbsp;</th>
-                        <th>Disagree</th>
-                        <th>Strongly disagree</th>
-                    </tr>
-                {% for field in form %}
-                {% for field in form %}
-                    
-                    <tr>
-                        <th style = "border-right: 1px solid black;">{{ field.label }}</th>
-                        {% for choice in field %}
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
+    <!-- Combined Table for pv3 and pv4 -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Questions</th>
+                <th>Strongly agree</th>
+                <th>Agree</th>
+                <th>More or less agree</th>
+                <th>Neutral</th>
+                <th>More or less disagree</th>
+                <th>Disagree</th>
+                <th>Strongly disagree</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="question-label">{{ form.pv3.label }}</td>
+                {% for choice in form.pv3 %}
+                    <td>{{ choice }}</td>
                 {% endfor %}
-             </table>
+            </tr>
+            <tr>
+                <td class="question-label">{{ form.pv4.label }}</td>
+                {% for choice in form.pv4 %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
 
-             {% next_button %}
+    <!-- Table for pv1 -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Questions</th>
+                <th>Very good value for the money</th>
+                <th>Good value</th>
+                <th>More or less good value</th>
+                <th>Neutral</th>
+                <th>More or less poor value</th>
+                <th>Poor value</th>
+                <th>Very poor value for the money</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="question-label">{{ form.pv1.label }}</td>
+                {% for choice in form.pv1 %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
 
-             {% endblock %}
+    <!-- Table for pv2 -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Questions</th>
+                <th>Very economical</th>
+                <th>Economical</th>
+                <th>More or less economical</th>
+                <th>Neutral</th>
+                <th>More or less uneconomical</th>
+                <th>Uneconomical</th>
+                <th>Very uneconomical</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="question-label">{{ form.pv2.label }}</td>
+                {% for choice in form.pv2 %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Table for pv5 -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Questions</th>
+                <th>Very acceptable</th>
+                <th>Acceptable</th>
+                <th>More or less acceptable</th>
+                <th>Neutral</th>
+                <th>More or less unacceptable</th>
+                <th>Unacceptable</th>
+                <th>Very unacceptable</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="question-label">{{ form.pv5.label }}</td>
+                {% for choice in form.pv5 %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

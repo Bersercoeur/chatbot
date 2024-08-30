@@ -8,12 +8,7 @@ from ._builtin import Page, WaitPage
 
 class Surveyz(Page):
     form_model = 'player'
-
-    def get_form_fields(self):
-        import random
-        form_fields = ['h1', 'h2', 'h3', 'c1', 'wt1']
-        random.shuffle(form_fields)
-        return form_fields
+    form_fields = ['h1', 'h2', 'h3', 'a1' ,'c1', 'wt1']
 
 
 class Surveya(Page):
@@ -45,12 +40,8 @@ class Surveyc(Page):
     
 class Surveyd(Page):
     form_model = 'player'
+    form_fields = ['wtb1', 'wtb2', 'wtb3', 'wtb4', 'wtb5']
 
-    def get_form_fields(self):
-        import random
-        form_fields = ['wtb1', 'wtb2', 'wtb3', 'wtb4', 'wtb5']
-        random.shuffle(form_fields)
-        return form_fields
 
 class Intro(Page):
     pass
@@ -62,8 +53,6 @@ class GeneralInformation(Page):
     form_model = 'player'
     form_fields = ['age', 'gender', 'educational_background', 'employment']
 
-class Feedback(Page):
-    pass
 
 class Scenario(Page):
     pass
@@ -71,10 +60,25 @@ class Scenario(Page):
 class Start(Page):
     pass
 
+class Part2(Page):
+    pass
+
+class Part3(Page):
+    pass
+
 class chat(Page):
     form_model = 'player'
-    form_fields = ['chatLog']
-    timeout_seconds = 600
+    form_fields = ['chat_log', 'menu_selected']
+    def before_next_page(self):
+        pass
 
+class Mood(Page):
+    form_model = 'player'
+    form_fields = ['vas']
 
-page_sequence = [Intro, Start, GeneralInformation, Surveyz, Scenario, chat, Surveya,Surveyb, Surveyd, Surveyc, Feedback, Debriefing]
+class Mood2(Page):
+    form_model = 'player'
+    form_fields = ['vas']
+
+page_sequence = [Intro, Start, Mood, GeneralInformation, Surveyz, Part2, Scenario, chat, Part3, Mood2, Surveya,Surveyb, Surveyd, Surveyc, Debriefing]
+#page_sequence = [Mood, Scenario, GeneralInformation, Surveyz]

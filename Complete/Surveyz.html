@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Survey (2/4)
+    Short survey before the experiment
 {% endblock %}
 
 {% block content %}
@@ -36,6 +36,7 @@
             border: 1px solid #CCCCCC;
             padding: 5px;
             width: 80px;
+            text-align: right;
         }
 
         .form-group label {
@@ -49,7 +50,7 @@
         }
     </style>
 
-    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements.</p>
+    <p style="font-size: 22px">Please indicate how much you personally agree or disagree with the following statements:</p>
 
     <table class="table">
         <tr>
@@ -63,14 +64,51 @@
             <th>Strongly disagree</th>
         </tr>
         {% for field in form %}
+        {% if forloop.counter <= 3 %}
         <tr>
             <td class="question-label">{{ field.label }}</td>
             {% for choice in field %}
                 <td>{{ choice }}</td>
             {% endfor %}
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
+
+    <div class="form-group">
+        <label for="frequency" class="question-label">{{ form.a1.label }}</label>
+        {{ form.a1 }}
+    </div>
+
+    <p style="font-size: 22px">Please indicate the importance of the following statement:</p>
+
+    <table class="table">
+        <tr>
+            <th>Questions</th>
+            <th>Extremely important</th>
+            <th>Important</th>
+            <th>Slightly important</th>
+            <th>Neutral</th>
+            <th>Slightly not important</th>
+            <th>Not important</th>
+            <th>Not important at all</th>
+        </tr>
+        {% for field in form %}
+        {% if forloop.counter == 5 %}
+        <tr>
+            <td class="question-label">{{ field.label }}</td>
+            {% for choice in field %}
+                <td>{{ choice }}</td>
+            {% endfor %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+    <div class="form-group">
+        <label for="wt1">{{ form.wt1.label }}</label>
+        <input type="number" name="{{ form.wt1.name }}" class="currency" placeholder="€0.00" min="0" max="100" step="0.01" required>
+    </div>
 
     {% next_button %}
 

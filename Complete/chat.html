@@ -1,200 +1,253 @@
-{{ extends "Complete/Page.html" }}
+{% extends "Complete/Page.html" %}
 
-{{ block title }}
+{% block title %}{% endblock %}
+
+{% block scripts %}
+<script>
+    var chatLogData = [];
+    var timeBase = Date.now();
+    var firstMovie = "";
+    var secondMovie = "";
+    var genre = "";
+    var chatbotVersion = "{{ player.chatbot_version }}";
+
+    // Define all messages and options based on the version
+    var messages = {
+        neutral: {
+            initial: "Hey there! I'm Alex, your Rex Cinema digital assistant bot. How can I help you?",
+            movieSearch: "Yes, of course. Do you feel like watching a romance, action, horror, or comedy movie?",
+            action: "What about the last Deadpool movie with Wolverine, starring Ryan Reynolds and Hugh Jackman? Deadpool unites with Wolverine to complete the mission and save his world from an existential threat.",
+            actionAlt: "Maybe the last Mission: Impossible – Dead Reckoning Part One? Tom Cruise returns as Ethan Hunt in an adrenaline-pumping mission to track down a deadly new weapon.",
+            romance: "We have currently showing: \"Anyone But You,\" features Sydney Sweeney and Glen Powell as Bea and Ben, whose initial spark fades after a great first date.",
+            romanceAlt: "\"Past Lives\" - Two childhood friends reunite decades later, reigniting a romance that was left behind.",
+            horror: "What about the last Alien movie - \"Alien: Romulus\"? Space colonizers come face to face with the most terrifying life-form in the universe.",
+            horrorAlt: "\"The Exorcist: Believer\" - Two girls disappear in the woods, and when they return, it’s clear that something evil came back with them.",
+            comedy: "What about the last Deadpool movie with Wolverine, starring Ryan Reynolds and Hugh Jackman? Packed with action and humor!",
+            comedyAlt: "\"No Hard Feelings\" - A young woman is hired to date a shy 19-year-old before he leaves for college.",
+            showtime: "Great! When would you like to watch it? You can choose between 1:45 PM, 4 PM, or 9 PM.",
+            price: "Perfect! The ticket will be only 10€. Would you also like to add an 8€ menu with a snack and a drink?",
+            final: "Thanks! Your booking is complete. The booking code is HIUZ65. Please bring it with you to the cinema. Have a great day!"
+        },
+        humorous: {
+            initial: "Hey there! I'm Alex, your Rex Cinema digital assistant bot. How can I help you?",
+            movieSearch: "Yes, of course! Ready to dive into romance, action, horror, or comedy? I promise, no judgment if you pick romance! 😜",
+            action: "Oh, I see you’re in the mood for some serious butt-kicking! 🥷 How about the latest Deadpool movie with Wolverine, starring Ryan Reynolds and Hugh Jackman? Expect epic one-liners, and maybe a few explosions… okay, a lot of explosions. 💥",
+            actionAlt: "What about Mission: Impossible – Dead Reckoning Part One? Tom Cruise returns as Ethan Hunt, ready to do more impossible things—because 'Mission: Easy' just doesn't have the same ring to it. 😜",
+            romance: "Ah, romance! Time to swoon. 💞 How about \"Anyone But You,\" starring Sydney Sweeney and Glen Powell? They had a dream date… that turned into a complete disaster. Now, they’re pretending to be the perfect couple at a wedding in Australia. Sparks fly, and not just the romantic kind!",
+            romanceAlt: "\"Past Lives\" - Two childhood friends reunite decades later, hoping to reignite a romance that was left behind. Spoiler: The man tracks her down and slaughters her... oh, sorry, wrong script. 🤭 They just fall in love again, but honestly, isn’t that just as terrifying? 😂",
+            horror: "So, you want to test your bravery? 'Alien: Romulus' is calling your name! Think deep space, creepy alien life-forms, and that tingling sensation down your spine that says, “Maybe I should’ve picked a comedy.” 😬",
+            horrorAlt: "\"The Exorcist: Believer\" - When two girls disappear in the woods and return with something evil, it’s a horror movie’s way of reminding us why we should never trust a forest—especially after dark. 🫣",
+            comedy: "Feeling like a good laugh, huh? Then Deadpool is your guy! It’s like a superhero buddy cop movie, but with way more sarcasm and explosions. Get ready to laugh so hard your popcorn flies! 🍿",
+            comedyAlt: "\"No Hard Feelings\" - On the brink of losing her home, Maddie finds an intriguing job listing: helicopter parents looking for someone to bring their introverted 19-year-old son out of his shell before college. She has one summer to make him a man—or at least teach him how to order his own pizza. 😂",
+            showtime: "Great choice! When would you like to watch it? I’ve got showtimes at 1:45 PM, 4 PM, and 9 PM. If you ask me, 4 PM is the sweet spot – late enough that you can hit snooze one more time, but early enough to avoid the popcorn rush. Unless you’re a night owl, then 9 PM is your jam. 🤔",
+            price: "The ticket’s just 10€! Oh, and how about I tempt you with an 8€ menu with a snack (popcorn, M&Ms or chips) and a drink to wash it all down? 🍿🥤 Don’t worry, the calories don’t count if you’re watching a movie! 😂",
+            final: "Thanks! The booking is done, and your code is “HIUZ65”. Don’t lose it – it’s your golden ticket! 🎟 Enjoy the show! 🤩"
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        botMessage(messages[chatbotVersion].initial, function() {
+            addButtons(["Can you help me find a movie to watch tomorrow?"], ["movieSearch"]);
+        });
+    });
+
+    function logChat(sender, chatText) {
+        let timestamp = (Date.now() - timeBase) / 1000;
+        var currentMsg = {
+            sender: sender,
+            text: chatText,
+            timestamp: timestamp
+        };
+        chatLogData.push(currentMsg);
+        document.getElementById('id_chatLog').value = JSON.stringify(chatLogData);
+    }
+
+    function showTyping() {
+        let typingIndicator = document.createElement('div');
+        typingIndicator.classList.add('typing-indicator');
+        typingIndicator.innerHTML = `<span class="dot"></span><span class="dot"></span><span class="dot"></span>`;
+        chat_messages.appendChild(typingIndicator);
+        chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+    }
+
+    function hideTyping() {
+        let typingIndicator = document.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    function botMessage(text, callback) {
+        showTyping();
+        setTimeout(function() {
+            hideTyping();
+            let row = `
+                <div class="bot-name">Alex</div>
+                <div class="msg">
+                    <img src="{% static 'gamer.png' %}" alt="Chatbot Logo" class="chatbot-logo">
+                    <div class="msg-content botText">${text}</div>
+                </div><br>`;
+            chat_messages.insertAdjacentHTML('beforeend', row);
+            chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+            logChat('Bot', text);
+            
+            if (callback) {
+                callback();
+            }
+        }, 1000);
+    }
+
+    function userMessage(option) {
+        let row = `<div class="msg" style="justify-content: flex-end;">
+                        <div class="msg-content selfText">${option}</div>
+                   </div>`;
+        chat_messages.insertAdjacentHTML('beforeend', row);
+        chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+        logChat('Participant', option);
+    }
+
+    function addButtons(options, actions) {
+        document.getElementById('buttonContainer').innerHTML = '';
+        options.forEach((option, index) => {
+            let button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = option;
+            button.classList.add('chatButton');
+            button.onclick = function() { handleUserChoice(actions[index], option); };
+            document.getElementById('buttonContainer').appendChild(button);
+        });
+        document.getElementById('chooseOptionContainer').style.display = 'block';
+    }
+
+    function handleUserChoice(action, userText) {
+        userMessage(userText);
+        switch(action) {
+            case 'movieSearch':
+                botMessage(messages[chatbotVersion].movieSearch, function() {
+                    addButtons([
+                        "Something with action! What movie can I watch?",
+                        "Something romantic! What movie can I watch?",
+                        "Something scary! What movie can I watch?",
+                        "Something funny! What movie can I watch?"
+                    ], ['action', 'romance', 'horror', 'comedy']);
+                });
+                break;
+            case 'action':
+                genre = "action";
+                firstMovie = messages[chatbotVersion].action;
+                secondMovie = messages[chatbotVersion].actionAlt;
+                showMovieOption(firstMovie);
+                break;
+            case 'romance':
+                genre = "romance";
+                firstMovie = messages[chatbotVersion].romance;
+                secondMovie = messages[chatbotVersion].romanceAlt;
+                showMovieOption(firstMovie);
+                break;
+            case 'horror':
+                genre = "horror";
+                firstMovie = messages[chatbotVersion].horror;
+                secondMovie = messages[chatbotVersion].horrorAlt;
+                showMovieOption(firstMovie);
+                break;
+            case 'comedy':
+                genre = "comedy";
+                firstMovie = messages[chatbotVersion].comedy;
+                secondMovie = messages[chatbotVersion].comedyAlt;
+                showMovieOption(firstMovie);
+                break;
+            case 'firstMovieOption':
+                botMessage(messages[chatbotVersion].showtime, function() {
+                    addButtons([
+                        "1:45 PM",
+                        "4 PM",
+                        "9 PM"
+                    ], ['showtime', 'showtime', 'showtime']);
+                });
+                break;
+                case 'secondMovieOption':
+                    botMessage(`${secondMovie}`, function() {
+                        addButtons([
+                            "I'll watch the first movie.",
+                            "I'll watch the second movie."
+                        ], ['watchFirstMovie', 'watchSecondMovie']);
+                    });
+                    break;
+            case 'watchFirstMovie':
+            case 'watchSecondMovie':
+                botMessage(messages[chatbotVersion].showtime, function() {
+                    addButtons([
+                        "1:45 PM",
+                        "4 PM",
+                        "9 PM"
+                    ], ['showtime', 'showtime', 'showtime']);
+                });
+                break;
+            case 'showtime':
+                botMessage(messages[chatbotVersion].price, function() {
+                    addButtons(["Yes, I will add the menu.", "No, I don’t want it."], ['yesMenu', 'noMenu']);
+                });
+                break;
+            case 'yesMenu':
+                document.getElementById('id_menuSelected').value = '1';  // Mark as true
+                botMessage(messages[chatbotVersion].final, function() {
+                    removeButtons();
+                    showNextButton();
+                });
+                break;
+            case 'noMenu':
+                document.getElementById('id_menuSelected').value = '0';  // Mark as false
+                botMessage(messages[chatbotVersion].final, function() {
+                    removeButtons();
+                    showNextButton();
+                });
+                break;
+        }
+    }
+
+    function showMovieOption(movie) {
+        botMessage(`${movie}`, function() {
+            addButtons(["Yes, I want to watch this movie.", "No, give me another option."], ['firstMovieOption', 'secondMovieOption']);
+        });
+    }
+
+    function removeButtons() {
+        document.getElementById('buttonContainer').innerHTML = '';
+        document.getElementById('chooseOptionContainer').style.display = 'none';
+    }
+
+    function showNextButton() {
+        document.getElementById('nextPageButton').style.display = 'block';
+    }
+
+    var chat_messages = document.getElementById('chat_messages');
+</script>
+{% endblock %}
+
+{% block content %}
 <div class="banner">
     <img src="{% static 'gamer_online.png' %}" alt="Chatbot Logo" class="banner-logo">
     Rex Cinema Chatbot
 </div>
-{{ endblock }}
 
-{{ block scripts }}
-    <script>
-        var chatLogData = [];
-        var timeBase = Date.now();
-
-        // Initial message from the bot
-        document.addEventListener("DOMContentLoaded", function (event) {
-            botMessage("Hey there! I'm Alex, your Rex Cinema digital assistant bot. How can I help you?", function() {
-                addButtons(["Can you help me find a movie to watch today?"], ["movieSearch"]);
-            });
-        });
-
-        // Function to log chat
-        function logChat(sender, chatText) {
-            let timestamp = (Date.now() - timeBase) / 1000;
-            var currentMsg = {
-                sender: sender,
-                text: chatText,
-                timestamp: timestamp
-            };
-            chatLogData.push(currentMsg);
-            document.getElementById('id_chatLog').value = JSON.stringify(chatLogData);
-        }
-
-        // Function to show the typing indicator
-        function showTyping() {
-            let typingIndicator = document.createElement('div');
-            typingIndicator.classList.add('typing-indicator');
-            typingIndicator.innerHTML = `<span class="dot"></span><span class="dot"></span><span class="dot"></span>`;
-            chat_messages.appendChild(typingIndicator);
-            chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
-        }
-
-        // Function to remove the typing indicator
-        function hideTyping() {
-            let typingIndicator = document.querySelector('.typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
-        }
-
-        // Function to send bot messages with delay
-        function botMessage(text, callback) {
-            showTyping();
-            setTimeout(function() {
-                hideTyping();
-                let row = `
-                    <div class="bot-name">Alex</div>
-                    <div class="msg">
-                        <img src="{% static 'gamer.png' %}" alt="Chatbot Logo" class="chatbot-logo">
-                        <div class="msg-content botText">${text}</div>
-                    </div><br>`;
-                chat_messages.insertAdjacentHTML('beforeend', row);
-                chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
-                logChat('Bot', text);
-                
-                if (callback) {
-                    callback(); // Call the function to add buttons after the message is displayed
-                }
-            }, 1000); // Simulate typing delay
-        }
-
-        // Function to handle user's choice
-        function userMessage(option) {
-            let row = `<div class="msg" style="justify-content: flex-end;">
-                            <div class="msg-content selfText">${option}</div>
-                       </div>`;
-            chat_messages.insertAdjacentHTML('beforeend', row);
-            chat_messages.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
-            logChat('Participant', option);
-        }
-
-        // Function to add buttons for user's options
-        function addButtons(options, actions) {
-            document.getElementById('buttonContainer').innerHTML = '';  // Clear previous buttons
-            options.forEach((option, index) => {
-                let button = document.createElement('button');
-                button.type = 'button';
-                button.textContent = option;
-                button.classList.add('chatButton');
-                button.onclick = function() { handleUserChoice(actions[index], option); };
-                document.getElementById('buttonContainer').appendChild(button);
-            });
-
-            // Show the placeholder text after buttons
-            document.getElementById('chooseOptionContainer').style.display = 'block';
-        }
-
-        // Function to handle the chat flow based on user's choices
-        function handleUserChoice(action, userText) {
-            userMessage(userText);
-            switch(action) {
-                case 'movieSearch':
-                    botMessage("Yes, of course. Do you feel like watching a romance, action, horror, or comedy movie?", function() {
-                        addButtons([
-                            "I feel like watching something with action today. What movie can I watch?",
-                            "I feel like watching something romantic today. What movie can I watch?",
-                            "I feel like watching something scary today. What movie can I watch?",
-                            "I feel like watching something funny today. What movie can I watch?"
-                        ], ['action', 'romance', 'horror', 'comedy']);
-                    });
-                    break;
-                case 'action':
-                    botMessage("Good choice. There’s the latest Deadpool movie with Wolverine, starring Ryan Reynolds and Hugh Jackman. Deadpool unites with his would-be pal, Wolverine, to complete the mission and save his world from an existential threat. How does that sound?", function() {
-                        addButtons(["Perfect! When can I watch it?"], ['showtimes']);
-                    });
-                    break;
-                case 'romance':
-                    botMessage("Great choice. There’s \"Anyone But You,\" starring Sydney Sweeney and Glen Powell. Despite having an amazing first date, Bea and Ben's initial attraction quickly turns sour. When they unexpectedly find themselves at a destination wedding in Australia, the pair pretend to be the perfect couple to keep up appearances.", function() {
-                        addButtons(["Perfect! When can I watch it?"], ['showtimes']);
-                    });
-                    break;
-                case 'horror':
-                    botMessage("If you’re up for a scare, how about \"Alien: Romulus\"? Directed by Fede Alvarez, it stars Cailee Spaeny and David Jonsson. Space colonizers come face to face with the most terrifying life-form in the universe while scavenging the deep ends of a derelict space station.", function() {
-                        addButtons(["Perfect! When can I watch it?"], ['showtimes']);
-                    });
-                    break;
-                case 'comedy':
-                    botMessage("How about a laugh? There’s the latest Deadpool movie with Wolverine, starring Ryan Reynolds and Hugh Jackman. It’s packed with action and humor!", function() {
-                        addButtons(["Perfect! When can I watch it?"], ['showtimes']);
-                    });
-                    break;
-                case 'showtimes':
-                    botMessage("You can watch the movie at 1:45 PM, 4 PM, or 9 PM. Which showtime fits you best?", function() {
-                        addButtons([
-                            "1:45 PM. What is the ticket price?",
-                            "4 PM. What is the ticket price?",
-                            "9 PM. What is the ticket price?"
-                        ], ['price', 'price', 'price']);
-                    });
-                    break;
-                case 'price':
-                    botMessage("The ticket will be only 8 Euros. Would you also like to add a 8 Euros menu to your ticket with a snack (popcorn, M&Ms or chips) and a drink?", function() {
-                        addButtons(["Yes, I will add the menu.", "No, I don’t want it."], ['yesMenu', 'noMenu']);
-                    });
-                    break;
-                case 'yesMenu':
-                    botMessage("Thanks! The booking is done. The booking code is HIUZ65. Bring it with you to the cinema when collecting your tickets. Have a nice day!", function() {
-                        removeButtons();
-                        showNextButton();
-                    });
-                    break;
-                case 'noMenu':
-                    botMessage("No problem! The booking is done. Your booking code is HIUZ65. Bring it with you to the cinema when collecting your tickets. Have a nice day!", function() {
-                        removeButtons();
-                        showNextButton();
-                    });
-                    break;
-            }
-        }
-
-        // Function to remove buttons at the end of the dialog
-        function removeButtons() {
-            document.getElementById('buttonContainer').innerHTML = '';
-            document.getElementById('chooseOptionContainer').style.display = 'none';
-        }
-
-        // Function to show the "Next Page" button
-        function showNextButton() {
-            document.getElementById('nextPageButton').style.display = 'block';
-        }
-
-        var chat_messages = document.getElementById('chat_messages');
-    </script>
-{{ endblock }}
-
-{{ block content }}
-
-    <!-- div displaying chat messages -->
-    <div class="textBox">
-        <div id="chat_messages">
-        </div>
+<div class="textBox" style="overflow-y: auto; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <div id="chat_messages">
     </div>
+</div>
 
-    <!-- Container for buttons and Placeholder text - Outside of Chat Container -->
-    <div id="buttonContainer" class="inputBox">
-    </div>
-    
-    <div id="chooseOptionContainer" class="choose-option-container" style="display: none;">
-        <p class="choose-option">Choose an option above...</p>
-    </div>
+<div id="buttonContainer" class="inputBox">
+</div>
 
-    <!-- Next Page Button -->
-    <button id="nextPageButton" class="btn btn-primary btn-large" style="display:none;" onclick="liveSend({});">
-        Next Page
-    </button>
+<div id="chooseOptionContainer" class="choose-option-container" style="display: none;">
+    <p class="choose-option">Choose an option above...</p>
+</div>
 
-    <!-- hidden input to save chat log -->
-    <input type='hidden' name='chatLog' value='' id='id_chatLog'/>
-        
-{{ endblock }}
+<button id="nextPageButton" class="btn-next" style="display:none;">
+    Next
+</button>
+
+<!-- Hidden inputs to store chat log and menu selection -->
+<input type='hidden' name='chat_log' value='' id='id_chatLog'/>
+<input type='hidden' name='menu_selected' value='' id='id_menuSelected'/>
+
+{% endblock %}

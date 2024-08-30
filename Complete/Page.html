@@ -2,191 +2,169 @@
 {% load static otree %}
 
 {% block app_styles %}
-
-<!-- load Roboto font -->
+<!-- Load Roboto font -->
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
 
 <style>
-  /* Global oTree styles */
+    .otree-body {
+        max-width: 1000px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 18px;
+    }
 
-  /* Body */
-  .otree-body {
-    max-width: 1000px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    padding: 20px;
-    border: 1px solid #ccc; /* Grey box border */
-    border-radius: 10px;
-    background-color: #f9f9f9;
-  }
-
-  /* Timer - Removed */
-  .otree-timer {
-    display: none;
-  }
-
-  /* Header styling to match Figma */
-  .otree-header {
-    background-color: #617d98; /* Example color, adjust to match Figma */
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .otree-header img {
-    margin-right: 10px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-
-  .banner {
-    display: flex;
-    align-items: center;
-    background-color: #7793A8; /* Background color of the banner */
-    padding: 10px;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 0; /* Ensure no space below the banner */
-    border-top-left-radius: 10px; /* Matching the rounded corners of the chat container */
-    border-top-right-radius: 10px; /* Matching the rounded corners of the chat container */
+    h2.otree-title.page-header {
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+    font-size: 0; /* Set font-size to 0 to make the text disappear */
+    line-height: 0; /* Set line-height to 0 to remove the height */
+    border: none; /* Remove any borders if they exist */
+    height: 0; /* Remove the height */
+    overflow: hidden; /* Ensure no content is visible */
 }
 
-.banner-logo {
-    width: 60px; /* Width of the logo */
-    height: 60px; /* Height of the logo */
-    margin-right: 20px; /* Space between the logo and the text */
-}
 
-  /* Chat Container */
-  .textBox {
-    background: white;
-    border: 2px solid lightgrey;
-    border-top: none; /* Remove the border at the top, so it aligns seamlessly with the banner */
-    border-radius: 0 0 0.5rem 0.5rem; /* Only round the bottom corners */
-    padding: 1rem;
-    height: 50vh;
-    overflow-y: auto;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 0; /* Ensure no space above the chat container */
-}
+    /* Banner Styling */
+    .banner {
+        display: flex;
+        align-items: center;
+        background-color: #38A1F3;
+        color: #ffffff;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 40px;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
 
-  /* Messages */
-  .msg {
-    display: flex;
-    margin-bottom: 10px;
-    align-items: flex-start;
-  }
+    .banner-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+    }
 
-  .msg img.chatbot-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
+    /* Chat Container */
+    .textBox {
+        background: white;
+        border: 2px solid lightgrey;
+        border-radius: 0 0 0.5rem 0.5rem;
+        padding: 1rem;
+        height: 50vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 0;
+    }
 
-  .msg .msg-content {
-    max-width: 70%;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 16px;
-    line-height: 1.5;
-  }
+    /* Messages */
+    .msg {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: flex-start;
+    }
 
-  .selfText {
-    background: #e0e0e0;
-    color: #333;
-    align-self: flex-end; /* Align user messages to the right */
-  }
+    .msg img.chatbot-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
-  .botText {
-    background: #7793A8;
-    color: white;
-    align-self: flex-start;
-  }
+    .msg .msg-content {
+        max-width: 70%;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+    }
 
-  /* Bot Name Styling */
-  .bot-name {
-    font-size: 14px;
-    color: #888;
-    margin-left: 50px; /* To align with the chat bubble */
-    margin-bottom: 5px;
-  }
+    div.msg-content.selfText {
+        background: #e0e0e0;
+        color: #333;
+        align-self: flex-end;
+        border-radius: 20px 0 20px 20px;
+    }
 
-  /* Input buttons */
-  .chatButton {
-    background-color: #7793a8d2; /* Example button color, adjust to match Figma */
-    border: 2px solid #375972;
-    color: #ffffff;
-    font-size: 16px;
-    padding: 10px 20px;
-    text-decoration: none;
-    margin: 10px 5px; /* Adjusted margin */
-    cursor: pointer;
-    border-radius: 20px;
-    width: calc(25% - 20px); /* Adjusted width */
-    text-align: center;
-  }
+    div.msg-content.botText {
+        background: #38A1F3;
+        color: white;
+        align-self: flex-start;
+        border-radius: 0 20px 20px 20px;
+    }
 
-  .chatButton:hover {
-    background-color: #375972; /* Darker shade for hover, adjust as needed */
-    border-color: #375972;
-  }
+    .bot-name {
+        font-size: 14px;
+        color: #888;
+        margin-left: 50px;
+        margin-bottom: 5px;
+    }
 
-  /* Bottom option text */
-  .choose-option-container {
-    background-color: #e0e0e0; /* Darker grey */
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 10px;
-    text-align: center;
-    width: 100%; /* Ensure it takes the full width */
-  }
+    /* Input buttons */
+    .chatButton {
+        background-color: #ffffff;
+        border: 2px solid #38A1F3;
+        color: #38A1F3;
+        font-size: 16px;
+        padding: 10px 20px;
+        text-decoration: none;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
 
-  .choose-option {
-    font-size: 14px;
-    color: #444; /* Darker text */
-    margin-bottom: 0;
-  }
+    .chatButton:hover {
+        background-color: #e0e0e0;
+    }
 
-  /* Custom Scrollbar */
-  .textBox::-webkit-scrollbar {
-    width: 1vw;
-  }
-  
-  .textBox::-webkit-scrollbar-thumb {
-    background: #667;
-    border-radius: 2vw;
-  }
+    /* Bottom option text */
+    .choose-option-container {
+        background-color: #e0e0e0;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;
+    }
 
-  .textBox::-webkit-scrollbar-track {
-    background: #ddd;
-    border-radius: 2vw;
-  }
+    .choose-option {
+        font-size: 16px;
+        color: #333333;
+        margin-bottom: 0;
+    }
 
-  /* Next Page Button */
-  #nextPageButton {
-    background-color: #003366; /* Dark blue color */
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 14px;
-  }
+    /* Custom Scrollbar */
+    .textBox::-webkit-scrollbar {
+        width: 1vw;
+    }
+
+    .textBox::-webkit-scrollbar-thumb {
+        background: #667;
+        border-radius: 2vw;
+    }
+
+    .textBox::-webkit-scrollbar-track {
+        background: #ddd;
+        border-radius: 2vw;
+    }
+
+    /* Centered Next Button */
+    .btn-next {
+        display: block;
+        margin: 20px auto; /* Center the button horizontally */
+        background-color: #003366;
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-next:hover {
+        background-color: #002244;
+    }
 </style>
-
 {% endblock %}
