@@ -43,7 +43,7 @@ class Surveyd(Page):
     form_fields = ['wtb1', 'wtb2', 'wtb3', 'wtb4', 'wtb5']
 
 
-class Intro(Page):
+class intro(Page):
     pass
 
 class Debriefing(Page):
@@ -80,5 +80,5 @@ class Mood2(Page):
     form_model = 'player'
     form_fields = ['vas']
 
-page_sequence = [Intro, Start, Mood, GeneralInformation, Surveyz, Part2, Scenario, chat, Part3, Mood2, Surveya,Surveyb, Surveyd, Surveyc, Debriefing]
+page_sequence = [intro, Start, Mood, GeneralInformation, Surveyz, Part2, Scenario, chat, Part3, Mood2, Surveya,Surveyb, Surveyd, Surveyc, Debriefing]
 #page_sequence = [Mood, Scenario, GeneralInformation, Surveyz]
