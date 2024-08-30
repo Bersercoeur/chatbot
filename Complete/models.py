@@ -39,8 +39,17 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
+        # Keep track of the number of participants assigned to each version
+        num_humorous = 0
+        num_neutral = 0
+
         for player in self.get_players():
-            player.chatbot_version = random.choice(Constants.chatbot_versions)
+            if num_humorous <= num_neutral:
+                player.chatbot_version = 'humorous'
+                num_humorous += 1
+            else:
+                player.chatbot_version = 'neutral'
+                num_neutral += 1
 
 class Group(BaseGroup):
     pass
